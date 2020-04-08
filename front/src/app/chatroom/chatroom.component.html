@@ -81,9 +81,12 @@
             <h2>Users:</h2>
             <p>Johny</p>
         </div>
-        <div class="messages" fxFlex="80">
-            <div *ngFor="let message of messages">
-                <p class="message" fxLayoutGap="10px"><b>{{ message.user }}:</b>{{ message.message }}</p>
+        <div id="messages" fxFlex="80">
+            <div class="serverMessage" *ngFor=" let serverInfoMessage of serverInfoMessages">
+                <p>{{ serverInfoMessage }}</p>
+            </div>
+            <div *ngFor="let UserMessage of UserMessages">
+                <p class="message" fxLayoutGap="10px"><b>{{ UserMessage.user }}:</b>{{ UserMessage.message }}</p>
             </div>
         </div>
     </div>
@@ -92,7 +95,6 @@
             <mat-form-field fxFlex="90" appearance="outline" style="margin-bottom: -1.25em">
                 <input matInput placeholder="wwWrite message" [(ngModel)]="clearInputField" name="input">
             </mat-form-field>
-            <!-- <span fxFlex></span> -->
             <button mat-icon-button fxFlex="10" type="submit">
                 <mat-icon>play_circle_outline</mat-icon>
             </button>
@@ -102,30 +104,3 @@
 </div>
 
 
-
-
-<section class="message-list">
-    <h1 fxLayoutAlign="center">ChrisChat</h1>
-
-    <div fxLayoutAlign="center" fxLayout="column">
-        <mat-list *ngFor="let message of messages">
-            <div mat-subheader>Notes</div>
-            <mat-list-item>
-                <p>{{ message.user }}</p>
-                <mat-icon mat-list-icon>note</mat-icon>
-                <div mat-line>{{ message.message }}</div>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-        </mat-list>
-
-    </div>
-</section>
-<section class="textInput">
-    <form (ngSubmit)="sendMessage(f)" #f="ngForm">
-        <mat-form-field appearance="outline" class="input">
-            <input matInput placeholder="Write message" ngModel name="input">
-            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        </mat-form-field>
-        <button type="submit" mat-button color="primary">Send</button>
-    </form>
-</section>

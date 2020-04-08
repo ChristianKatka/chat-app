@@ -11,15 +11,21 @@
     border-radius: 8px;
     background-color: rgb(255, 180, 151);
 }
-.messages {
+#messages {
     padding: 50px 60px 10px 60px;
     background-color: white;
     border-radius: 10px 0px 0px 10px;
+    overflow: scroll;
+    height: 300px;
 }
 
 .message {
     border-radius: 5px;
     background-color: rgb(255, 180, 151);
+}
+.serverMessage {
+    border-radius: 5px;
+    background-color: rgb(206, 206, 206);
 }
 
 

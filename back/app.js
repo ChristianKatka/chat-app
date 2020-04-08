@@ -33,11 +33,11 @@ io.on('connection', socket => {
 
 
     // Welcome current user
-    socket.emit('message', 'welcome to chat');
+    socket.emit('ServerMessage', 'welcome to chat');
 
 
     // Listen for user sent chat message
-    socket.on('chatMessage', msg => {
+    socket.on('chatMessageSend', msg => {
         message= {message: msg, user: 'backend'};
         // sends message to everybody
         io.emit('message', message);
@@ -46,12 +46,12 @@ io.on('connection', socket => {
 
 
     // braodcast when a user connects. broadcast/emit to everybody except to the user who is connected
-    socket.broadcast.emit('message', ' A user has joined the chat');
+    socket.broadcast.emit('ServerMessage', ' A user has joined the chat');
 
 
     // When client disconnects
     socket.on('disconnect', () => {
-        io.emit('message', 'A user has left the chat');
+        io.emit('ServerMessage', 'A user has left the chat');
     })
 
 

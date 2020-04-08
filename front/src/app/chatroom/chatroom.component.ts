@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 
@@ -10,11 +10,13 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 })
 export class ChatroomComponent implements OnInit {
 
+  // scroll down when new message comes
+  container: HTMLElement;
+
   socketAddress = socketIo('http://localhost:3000');
 
-  // user input field value here
-  userTypedMessage = 'user typed something';
-  messages = [{ message: 'Katsoin taivaalle', user: 'Chris' },{ message: 'Katsoin taivaalle', user: 'Chris' },{ message: 'Katsoin taivaalle', user: 'Chris' },];
+  serverInfoMessages = [];
+  UserMessages = [{ message: 'Katsoin taivaalle', user: 'Chris' }, { message: 'Katsoin taivaalle', user: 'Chris' }, { message: 'Katsoin taivaalle', user: 'Chris' },];
 
   clearInputField: string = '';
 
@@ -22,21 +24,19 @@ export class ChatroomComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketCall();
-    console.log(this.messages);
+    console.log(this.UserMessages);
   }
+
 
   /**Input form
    * 
    * @param message message that user typed and sent 
    */
   sendMessage(message: any) {
-
     // Send message to server.
-    console.log('console logaus frontissa:', message.value.input);
-    this.socketAddress.emit('chatMessage', message.value.input);
+    this.socketAddress.emit('chatMessageSend', message.value.input);
     this.clearInputField = '';
-  
-
+    // this.scrollToBottom();
   }
 
 
@@ -44,23 +44,17 @@ export class ChatroomComponent implements OnInit {
 
     // get message from server 
     this.socketAddress.on('message', message => {
-      this.messages.push(message);
+      this.UserMessages.push(message);
     })
 
+    this.socketAddress.on('ServerMessage', message => {
+      this.serverInfoMessages.push(message);
+    })
+
+
+
     // Send message to server
-    this.socketAddress.emit('chatMessage', this.userTypedMessage);
-
-
-
-
-
-
-
-
-
-
-
-
+    // this.socketAddress.emit('chatMessage', this.userTypedMessage);
 
 
 
@@ -81,5 +75,18 @@ export class ChatroomComponent implements OnInit {
 
 
   }
+
+
+
+  scrollToBottom(): void {
+    try {
+      this.container = document.getElementById("messages");
+      this.container.scrollTop = this.container.scrollHeight - this.container.clientHeight;
+    } catch (err) { console.log(err) }
+  }
+
+
+
+
 
 }
