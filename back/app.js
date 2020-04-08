@@ -25,7 +25,7 @@ server.listen(3000, () => {
 // capture instance of socketIo
 const io = socketIo(server);
 
-
+botName = 'Socket Bot'
 
 // when client connects to the server
 io.on('connection', socket => {
@@ -33,7 +33,7 @@ io.on('connection', socket => {
 
 
     // Welcome current user
-    socket.emit('ServerMessage', 'welcome to chat');
+    socket.emit('message', {message: 'Welcome the chat', user: botName});
 
 
     // Listen for user sent chat message
@@ -41,17 +41,18 @@ io.on('connection', socket => {
         message= {message: msg, user: 'backend'};
         // sends message to everybody
         io.emit('message', message);
+        console.log(message);
     })
 
 
 
     // braodcast when a user connects. broadcast/emit to everybody except to the user who is connected
-    socket.broadcast.emit('ServerMessage', ' A user has joined the chat');
+    socket.broadcast.emit('message', {message: 'A user has joined the chat', user: botName});
 
 
     // When client disconnects
     socket.on('disconnect', () => {
-        io.emit('ServerMessage', 'A user has left the chat');
+        io.emit('message', {message: 'A user has left the chat', user: botName});
     })
 
 

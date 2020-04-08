@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import * as socketIo from 'socket.io-client';
-import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { ChatService } from '../chat.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,71 +10,42 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 })
 export class ChatroomComponent implements OnInit {
 
+  sub: Subscription;
+
   // scroll down when new message comes
   container: HTMLElement;
 
-  socketAddress = socketIo('http://localhost:3000');
+  messages = [];
 
-  serverInfoMessages = [];
-  UserMessages = [];
-
+  // ngModel in input field
   clearInputField: string = '';
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.socketCall();
-    console.log(this.UserMessages);
+    console.log(this.messages);
+    this.getMessages();
   }
 
+  sendMessage(message) {
+    this.chatService.sendMessageToServer(message.value.input);
 
-  /**Input form
-   * 
-   * @param message message that user typed and sent 
-   */
-  sendMessage(message: any) {
-    // Send message to server.
-    this.socketAddress.emit('chatMessageSend', message.value.input);
     this.clearInputField = '';
     // this.scrollToBottom();
   }
 
-
-  socketCall() {
-
-    // get message from server 
-    this.socketAddress.on('message', message => {
-      this.UserMessages.push(message);
+  // Get messages that gets send
+  getMessages() {
+    this.sub = this.chatService.fetchUserMessages()
+      .subscribe(data => {
+        console.log(data);
+        this.messages.push(data);
     })
-
-    this.socketAddress.on('ServerMessage', message => {
-      this.serverInfoMessages.push(message);
-    })
-
-
-
-    // Send message to server
-    // this.socketAddress.emit('chatMessage', this.userTypedMessage);
-
-
-
-    // this.socketAddress.on('hello', (data) => console.log(data));
-
-    // this.socketAddress.on('connections', function (data) {
-    //   console.log(data);
-    // });
-    // this.socketAddress.on('users', function (data) {
-
-    // });
-    // this.socketAddress.on('update', function (data) {
-
-    // });
-    // this.socketAddress.on('win', function (data) {
-
-    // });
-
-
   }
+
+
+
+
 
 
 
