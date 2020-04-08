@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as socketIo from 'socket.io-client';
+import { FormGroup, FormGroupDirective } from '@angular/forms';
+
 
 @Component({
   selector: 'app-chatroom',
@@ -10,11 +12,11 @@ export class ChatroomComponent implements OnInit {
 
   socketAddress = socketIo('http://localhost:3000');
 
-
   // user input field value here
   userTypedMessage = 'user typed something';
-  messages = [{ message: 'Katsoin taivaalle', user: 'Chris' }];
+  messages = [{ message: 'Katsoin taivaalle', user: 'Chris' },{ message: 'Katsoin taivaalle', user: 'Chris' },{ message: 'Katsoin taivaalle', user: 'Chris' },];
 
+  clearInputField: string = '';
 
   constructor() { }
 
@@ -27,9 +29,13 @@ export class ChatroomComponent implements OnInit {
    * 
    * @param message message that user typed and sent 
    */
-  sendMessage(message) {
+  sendMessage(message: any) {
+
     // Send message to server.
+    console.log('console logaus frontissa:', message.value.input);
     this.socketAddress.emit('chatMessage', message.value.input);
+    this.clearInputField = '';
+  
 
   }
 

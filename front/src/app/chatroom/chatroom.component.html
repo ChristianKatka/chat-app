@@ -1,4 +1,4 @@
-<div class="wholething">
+<!-- <div class="wholething">
     <div class="top-section" fxLayout="row">
         <mat-icon>face</mat-icon>
         <h1>ChrisChat</h1>
@@ -35,79 +35,13 @@
             </div>
         </div>
     </div>
-    <div class="input" fxLayout="row" fxLayoutAlign="center center">
-        <form class="example-form" fxFlex>
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Type something">
-            </mat-form-field>
-        </form>
-        <span fxFlex></span>
-        <button mat-icon-button fxFlex="nogrow">
-            <mat-icon>play_circle_outline</mat-icon>
-        </button>
-    </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="wholething">
-    <div class="top-section" fxLayout="row">
-        <mat-icon>face</mat-icon>
-        <h1>ChrisChat</h1>
-
-        <span fxFlex></span>
-        <button mat-icon-button>
-            <mat-icon>input</mat-icon>
-        </button>
-    </div>
-    <div>
-        <div class="list" fxFlex="20">
-            <h2>Room name:</h2>
-            <h4>Room 1</h4>
-            <h2>Users:</h2>
-            <p>Johny</p>
-        </div>
-        <div class="messages" fxFlex="80">
-            <div class="message" fxLayoutGap="10px">
-                <p>Chris</p>
-                <p>Moikkulii tää on viesti</p>
-            </div>
-            <div class="message" fxLayoutGap="10px">
-                <p>Chris</p>
-                <p>Moikkulii tää on viesti</p>
-            </div>
-            <div class="message" fxLayoutGap="10px">
-                <p>Chris</p>
-                <p>Moikkulii tää on viesti</p>
-            </div>
-
-            <div class="message" fxLayoutGap="10px">
-                <p>Chris</p>
-                <p>Moikkulii tää on viesti</p>
-            </div>
-        </div>
-    </div>
-    <div class="input" fxLayout="row" fxLayoutAlign="center center">
-        <form (ngSubmit)="sendMessage(f)" #f="ngForm" fxFlex>
-            <mat-form-field appearance="outline" class="input">
+    <div class="input">
+        <form (ngSubmit)="sendMessage(f)" #f="ngForm" fxLayout="row" fxLayoutAlign="end center">
+            <mat-form-field fxFlex="90" appearance="outline" style="margin-bottom: -1.25em">
                 <input matInput placeholder="wwWrite message" ngModel name="input">
             </mat-form-field>
             <span fxFlex></span>
-            <button mat-icon-button>
+            <button mat-icon-button fxFlex="10">
                 <mat-icon>play_circle_outline</mat-icon>
             </button>
         </form>
@@ -115,9 +49,57 @@
 
 </div>
 
+ -->
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+<div class="wholething">
+    <div class="top-section" fxLayout="row">
+        <mat-icon>face</mat-icon>
+        <h1>ChrisChat</h1>
+
+        <span fxFlex></span>
+        <button mat-icon-button>
+            <mat-icon>input</mat-icon>
+        </button>
+    </div>
+    <div>
+        <div class="list" fxFlex="20">
+            <h2>Room name:</h2>
+            <h4>Room 1</h4>
+            <h2>Users:</h2>
+            <p>Johny</p>
+        </div>
+        <div class="messages" fxFlex="80">
+            <div *ngFor="let message of messages">
+                <p class="message" fxLayoutGap="10px"><b>{{ message.user }}:</b>{{ message.message }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="input">
+        <form (ngSubmit)="sendMessage(f)" #f="ngForm" fxLayout="row" fxLayoutAlign="end center">
+            <mat-form-field fxFlex="90" appearance="outline" style="margin-bottom: -1.25em">
+                <input matInput placeholder="wwWrite message" [(ngModel)]="clearInputField" name="input">
+            </mat-form-field>
+            <!-- <span fxFlex></span> -->
+            <button mat-icon-button fxFlex="10" type="submit">
+                <mat-icon>play_circle_outline</mat-icon>
+            </button>
+        </form>
+    </div>
+
+</div>
 
 
 
