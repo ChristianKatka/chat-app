@@ -16,7 +16,7 @@ export class ChatroomComponent implements OnInit {
   socketAddress = socketIo('http://localhost:3000');
 
   serverInfoMessages = [];
-  UserMessages = [{ message: 'Katsoin taivaalle', user: 'Chris' }, { message: 'Katsoin taivaalle', user: 'Chris' }, { message: 'Katsoin taivaalle', user: 'Chris' },];
+  UserMessages = [];
 
   clearInputField: string = '';
 

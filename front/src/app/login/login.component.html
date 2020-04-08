@@ -1,1 +1,23 @@
-<p>login works!</p>
+<section class="signup-form">
+    <h1 fxLayoutAlign="center">ChatChris</h1>
+    <!-- main axis, cross axis #means Local reference-->
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px"
+    (ngSubmit)="joinRoom(f)" #f="ngForm">
+        <mat-form-field>
+            <input matInput placeholder="Your username" required ngModel name="username">
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <mat-label>Select room</mat-label>
+          <mat-select ngModel name="room" required>
+            <mat-option *ngFor="let room of rooms" [value]="room.value">
+              {{room.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button type="submit" [disabled]="f.invalid" mat-raised-button color="primary">Join</button>
+
+    </form>
+</section>
