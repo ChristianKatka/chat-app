@@ -1,0 +1,149 @@
+<div class="wholething">
+    <div class="top-section" fxLayout="row">
+        <mat-icon>face</mat-icon>
+        <h1>ChrisChat</h1>
+
+        <span fxFlex></span>
+        <button mat-icon-button>
+            <mat-icon>input</mat-icon>
+        </button>
+    </div>
+    <div>
+        <div class="list" fxFlex="20">
+            <h2>Room name:</h2>
+            <h4>Room 1</h4>
+            <h2>Users:</h2>
+            <p>Johny</p>
+        </div>
+        <div class="messages" fxFlex="80">
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+        </div>
+    </div>
+    <div class="input" fxLayout="row" fxLayoutAlign="center center">
+        <form class="example-form" fxFlex>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Type something">
+            </mat-form-field>
+        </form>
+        <span fxFlex></span>
+        <button mat-icon-button fxFlex="nogrow">
+            <mat-icon>play_circle_outline</mat-icon>
+        </button>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="wholething">
+    <div class="top-section" fxLayout="row">
+        <mat-icon>face</mat-icon>
+        <h1>ChrisChat</h1>
+
+        <span fxFlex></span>
+        <button mat-icon-button>
+            <mat-icon>input</mat-icon>
+        </button>
+    </div>
+    <div>
+        <div class="list" fxFlex="20">
+            <h2>Room name:</h2>
+            <h4>Room 1</h4>
+            <h2>Users:</h2>
+            <p>Johny</p>
+        </div>
+        <div class="messages" fxFlex="80">
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+
+            <div class="message" fxLayoutGap="10px">
+                <p>Chris</p>
+                <p>Moikkulii tää on viesti</p>
+            </div>
+        </div>
+    </div>
+    <div class="input" fxLayout="row" fxLayoutAlign="center center">
+        <form (ngSubmit)="sendMessage(f)" #f="ngForm" fxFlex>
+            <mat-form-field appearance="outline" class="input">
+                <input matInput placeholder="wwWrite message" ngModel name="input">
+            </mat-form-field>
+            <span fxFlex></span>
+            <button mat-icon-button>
+                <mat-icon>play_circle_outline</mat-icon>
+            </button>
+        </form>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<section class="message-list">
+    <h1 fxLayoutAlign="center">ChrisChat</h1>
+
+    <div fxLayoutAlign="center" fxLayout="column">
+        <mat-list *ngFor="let message of messages">
+            <div mat-subheader>Notes</div>
+            <mat-list-item>
+                <p>{{ message.user }}</p>
+                <mat-icon mat-list-icon>note</mat-icon>
+                <div mat-line>{{ message.message }}</div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-list>
+
+    </div>
+</section>
+<section class="textInput">
+    <form (ngSubmit)="sendMessage(f)" #f="ngForm">
+        <mat-form-field appearance="outline" class="input">
+            <input matInput placeholder="Write message" ngModel name="input">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+        <button type="submit" mat-button color="primary">Send</button>
+    </form>
+</section>
