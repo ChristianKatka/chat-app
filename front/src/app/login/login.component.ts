@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChatService } from '../chat.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +11,12 @@ export class LoginComponent implements OnInit {
 
 
   rooms = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
+    {value: 'room-1', viewValue: 'Room 1'},
+    {value: 'room-2', viewValue: 'Room 2'},
+    {value: 'room-3', viewValue: 'Room 3'}
   ];
 
-  constructor() { }
+  constructor(private chatService: ChatService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,6 +28,9 @@ export class LoginComponent implements OnInit {
  */
   joinRoom(f) {
     console.log(f.value);
+    this.chatService.joingRoom(f.value);
+
+    this.router.navigate(['/chat']);
   }
 
 }

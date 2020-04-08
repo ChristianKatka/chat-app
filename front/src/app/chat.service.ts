@@ -16,6 +16,11 @@ export class ChatService {
   constructor() { }
 
 
+  joingRoom(data) {
+    this.socketAddress.emit('joinRoom', data)
+  }
+
+
  /**
    * 
    * @param message message that user typed and sent 

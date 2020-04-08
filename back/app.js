@@ -3,10 +3,11 @@ const app = express();
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
-const Moniker = require('moniker');
-
 // acces data send in body
 const bodyParser = require('body-parser');
+
+// Used to handle users
+const { userJoin, getCurrentUser } = require('./user');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -31,28 +32,44 @@ botName = 'Socket Bot'
 io.on('connection', socket => {
     console.log('new  connection');
 
+    // Room joining 
+    socket.on('joinRoom', ({ username, room }) => {
+        // push new user in users array in user.js file socket.id = user id
+        const user = userJoin(socket.id, username, room);
+        console.log('bäkkäri logataan user:', user)
+        // Direct user to the room he chose
+        socket.join(user.room);
 
-    // Welcome current user
-    socket.emit('message', {message: 'Welcome the chat', user: botName});
+        // Welcome current user
+        socket.emit('message', { message: 'Welcome the chat', user: botName });
+
+        // braodcast when a user connects. broadcast/emit to everybody in the room except to the user who is connected
+        // to(user.room) Broadcasts to specific room
+        socket.broadcast.to(user.room).emit('message', { message: `${user.username} has joined the chosen room`, user: botName });
+
+    });
+
+
 
 
     // Listen for user sent chat message
     socket.on('chatMessageSend', msg => {
-        message= {message: msg, user: 'backend'};
-        // sends message to everybody
-        io.emit('message', message);
+        // get current user by id
+        const user = getCurrentUser(socket.id);
+
+        message = { message: msg, user: user.username };
+        // sends message to chosen room
+        io.to(user.room).emit('message', message);
         console.log(message);
     })
 
 
 
-    // braodcast when a user connects. broadcast/emit to everybody except to the user who is connected
-    socket.broadcast.emit('message', {message: 'A user has joined the chat', user: botName});
 
 
     // When client disconnects
     socket.on('disconnect', () => {
-        io.emit('message', {message: 'A user has left the chat', user: botName});
+        io.emit('message', { message: 'A user has left the chat', user: botName });
     })
 
 
