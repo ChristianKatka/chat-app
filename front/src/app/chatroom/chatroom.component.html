@@ -77,14 +77,11 @@
     <div>
         <div class="list" fxFlex="20">
             <h2>Room name:</h2>
-            <h4>Room 1</h4>
+            <h4>{{ whichRoom }}</h4>
             <h2>Users:</h2>
-            <p>Johny</p>
+            <p *ngFor="let userInRoom of usersInRoom">{{ userInRoom.username }}</p>
         </div>
         <div id="messages" fxFlex="80">
-            <div class="serverMessage" *ngFor=" let serverInfoMessage of serverInfoMessages">
-                <p>{{ serverInfoMessage }}</p>
-            </div>
             <div *ngFor="let message of messages">
                 <p class="message" fxLayoutGap="10px"><b>{{ message.user }}:</b>{{ message.message }}</p>
             </div>
@@ -102,5 +99,3 @@
     </div>
 
 </div>
-
-

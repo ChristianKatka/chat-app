@@ -12,7 +12,7 @@
           <mat-label>Select room</mat-label>
           <mat-select ngModel name="room" required>
             <mat-option *ngFor="let room of rooms" [value]="room.value">
-              {{room.viewValue}}
+              {{room.value}}
             </mat-option>
           </mat-select>
         </mat-form-field>

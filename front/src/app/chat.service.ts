@@ -15,11 +15,16 @@ export class ChatService {
 
   constructor() { }
 
+
+
+
+
+
   /**
    * 
    * @param data Form = {username: user input, room: room}
    */
-  joingRoom(data) {
+  joinRoom(data) {
     this.socketAddress.emit('joinRoom', data)
   }
 
@@ -47,6 +52,36 @@ export class ChatService {
     return new Observable(observer => {
       this.observer = observer;
     });
+  }
+
+  /** Get the room where current user is in
+   * 
+   */
+  getUserRoom() {
+    let observable = new Observable(observer => {
+      this.socketAddress.on('roomOfUser', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socketAddress.disconnect();
+      };
+    })
+    return observable;
+  }
+
+  /** Get users in given room
+   * 
+   */
+  getUsersInRoom() {
+    let observable = new Observable(observer => {
+      this.socketAddress.on('usersInRoom', (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socketAddress.disconnect();
+      };
+    })
+    return observable;
   }
 
 

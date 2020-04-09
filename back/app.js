@@ -47,6 +47,11 @@ io.on('connection', socket => {
         // to(user.room) Broadcasts to specific room
         socket.broadcast.to(user.room).emit('message', { message: `${user.username} has joined the chosen room`, user: botName });
 
+        // Send info in what room user is in
+        io.to(user.room).emit('roomOfUser', { room: user.room, msg: `${user.username} is in ${user.room}` });
+
+        io.to(user.room).emit('usersInRoom', getRoomUsers(user.room));
+
     });
 
 
@@ -75,9 +80,11 @@ io.on('connection', socket => {
         console.log('joku disconnectas');
         const disconnectedUser = userLeave(socket.id);
         console.log('täs lähteny user:', disconnectedUser);
-        console.log('disc username: ', disconnectedUser[0].username);
+        console.log('disc username: ', disconnectedUser.username);
         if (disconnectedUser) {
-            io.to(disconnectedUser[0].room).emit('message', { message: `${disconnectedUser[0].username} has left the chat`, user: botName });
+            io.to(disconnectedUser.room).emit('message', { message: `${disconnectedUser.username} has left the chat`, user: botName });
+            // Send info who is in the room
+            io.to(user.room).emit('roomUsers', { room: user.room, users: getRoomUsers(user.room) });
         }
     });
 

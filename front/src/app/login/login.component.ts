@@ -11,9 +11,9 @@ export class LoginComponent implements OnInit {
 
 
   rooms = [
-    {value: 'room-1', viewValue: 'Room 1'},
-    {value: 'room-2', viewValue: 'Room 2'},
-    {value: 'room-3', viewValue: 'Room 3'}
+    {value: 'Room-1'},
+    {value: 'Room-2'},
+    {value: 'Room-3'}
   ];
 
   constructor(private chatService: ChatService, private router: Router) { }
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
  */
   joinRoom(f) {
     console.log(f.value);
-    this.chatService.joingRoom(f.value);
+    this.chatService.joinRoom(f.value);
 
     this.router.navigate(['/chat']);
   }

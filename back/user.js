@@ -20,8 +20,8 @@ function userLeave(id) {
     console.log('logataan löydetty indexi:', index);
     // if didint found index to given user returns -1
     if(index !== -1) {
-        // returns the deleted user
-        return users.splice(index, 1);
+        // returns the deleted user. first index so it wont return array
+        return users.splice(index, 1)[0];
     }
 }
 
