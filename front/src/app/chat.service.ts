@@ -15,16 +15,19 @@ export class ChatService {
 
   constructor() { }
 
-
+  /**
+   * 
+   * @param data Form = {username: user input, room: room}
+   */
   joingRoom(data) {
     this.socketAddress.emit('joinRoom', data)
   }
 
 
- /**
-   * 
-   * @param message message that user typed and sent 
-   */
+  /**
+    * 
+    * @param message message that user typed and sent 
+    */
   sendMessageToServer(message: any) {
     // Send message to server.
     this.socketAddress.emit('chatMessageSend', message);
@@ -33,17 +36,17 @@ export class ChatService {
 
 
 
-  observer 
+  observer
   fetchUserMessages(): Observable<any> {
-      this.socketAddress.on('message', (res) => {
-          this.observer.next(res);
-      });
-      return this.getSocketDataObservable();
+    this.socketAddress.on('message', (res) => {
+      this.observer.next(res);
+    });
+    return this.getSocketDataObservable();
   }
   getSocketDataObservable(): Observable<any> {
-      return new Observable(observer => {
-          this.observer = observer;
-      });
+    return new Observable(observer => {
+      this.observer = observer;
+    });
   }
 
 

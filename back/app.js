@@ -7,7 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // Used to handle users
-const { userJoin, getCurrentUser } = require('./user');
+const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require('./user');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -55,13 +55,16 @@ io.on('connection', socket => {
     // Listen for user sent chat message
     socket.on('chatMessageSend', msg => {
         // get current user by id
-        const user = getCurrentUser(socket.id);
+        const currentUser = getCurrentUser(socket.id);
 
-        message = { message: msg, user: user.username };
+        console.log('täs on käyttäjä:', currentUser);
+        console.log('täs sen nimi:', currentUser.username);
+
+        message = { message: msg, user: currentUser.username };
         // sends message to chosen room
-        io.to(user.room).emit('message', message);
+        io.to(currentUser.room).emit('message', message);
         console.log(message);
-    })
+    });
 
 
 
@@ -69,8 +72,14 @@ io.on('connection', socket => {
 
     // When client disconnects
     socket.on('disconnect', () => {
-        io.emit('message', { message: 'A user has left the chat', user: botName });
-    })
+        console.log('joku disconnectas');
+        const disconnectedUser = userLeave(socket.id);
+        console.log('täs lähteny user:', disconnectedUser);
+        console.log('disc username: ', disconnectedUser[0].username);
+        if (disconnectedUser) {
+            io.to(disconnectedUser[0].room).emit('message', { message: `${disconnectedUser[0].username} has left the chat`, user: botName });
+        }
+    });
 
 
 });
@@ -87,61 +96,3 @@ io.on('connection', socket => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// const initialWidth = 20;
-// const currentWidth = initialWidth;
-// const winWidth = 150;
-// const users = [];
-
-
-// const addUser = function () {
-//     const user = {
-//         name: Moniker.choose(),
-//         clicks: 0
-//     }
-//     console.log(user);
-//     users.push(user);
-//     return user;
-// }
-
-// const removeUser = function(user) {
-
-//     io.sockets.emit("users", {users: user});
-// }
-
-// const updateWidth = function() {
-//     io.sockets.emit("update", { currentWidth: currentWidth });
-// }
-
-
-// // connection event which fires every time when a new user visits the game
-// io.sockets.on('connection', function (socket) {
-//     // console.log('tääl ollaa');
-//     const user = addUser();
-//     updateWidth();
-//     socket.emit("welcome", user);
-//     // when the user close the browser/tab
-//     socket.on('disconnect', function () {
-//         removeUser(user);
-//     });
-//     socket.on("click", function () {
-//         currentWidth += 1;
-//         user.clicks += 1;
-//         if (currentWidth == winWidth) {
-//             currentWidth = initialWidth;
-//             io.sockets.emit("win", { message: "" + user.name + " rocks!" });
-//         }
-//         updateWidth();
-//     });
-// });
